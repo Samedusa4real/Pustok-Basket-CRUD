@@ -22,6 +22,7 @@ namespace PustokTemplate.DAL
         public DbSet<Setting> Settings { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<BasketItem> BasketItems { get; set; }
+        public DbSet<BookComment> BookComments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

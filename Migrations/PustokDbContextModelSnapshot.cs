@@ -318,6 +318,40 @@ namespace PustokTemplate.Migrations
                     b.ToTable("Books");
                 });
 
+            modelBuilder.Entity("PustokTemplate.Models.BookComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rate")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("BookComments");
+                });
+
             modelBuilder.Entity("PustokTemplate.Models.BookTag", b =>
                 {
                     b.Property<int>("TagId")
@@ -575,6 +609,23 @@ namespace PustokTemplate.Migrations
                     b.Navigation("Genre");
                 });
 
+            modelBuilder.Entity("PustokTemplate.Models.BookComment", b =>
+                {
+                    b.HasOne("PustokTemplate.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("PustokTemplate.Models.Book", "Book")
+                        .WithMany("BookComments")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Book");
+                });
+
             modelBuilder.Entity("PustokTemplate.Models.BookTag", b =>
                 {
                     b.HasOne("PustokTemplate.Models.Book", "Book")
@@ -612,6 +663,8 @@ namespace PustokTemplate.Migrations
 
             modelBuilder.Entity("PustokTemplate.Models.Book", b =>
                 {
+                    b.Navigation("BookComments");
+
                     b.Navigation("BookTags");
 
                     b.Navigation("Images");

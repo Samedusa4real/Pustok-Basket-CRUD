@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Samedusa\\Desktop\\Identity\\PustokTemplate.csproj": {}
+    "C:\\Users\\Samedusa\\Desktop\\Pustok-Basket-CRUD\\PustokTemplate.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Samedusa\\Desktop\\Identity\\PustokTemplate.csproj": {
+    "C:\\Users\\Samedusa\\Desktop\\Pustok-Basket-CRUD\\PustokTemplate.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Samedusa\\Desktop\\Identity\\PustokTemplate.csproj",
+        "projectUniqueName": "C:\\Users\\Samedusa\\Desktop\\Pustok-Basket-CRUD\\PustokTemplate.csproj",
         "projectName": "PustokTemplate",
-        "projectPath": "C:\\Users\\Samedusa\\Desktop\\Identity\\PustokTemplate.csproj",
+        "projectPath": "C:\\Users\\Samedusa\\Desktop\\Pustok-Basket-CRUD\\PustokTemplate.csproj",
         "packagesPath": "C:\\Users\\Samedusa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Samedusa\\Desktop\\Identity\\obj\\",
+        "outputPath": "C:\\Users\\Samedusa\\Desktop\\Pustok-Basket-CRUD\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Samedusa\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -16,6 +16,72 @@ namespace PustokTemplate.Controllers
         {
             _context = context;
         }
+		public IActionResult Detail(int id)
+		{
+			Book book = _context.Books
+				.Include(x => x.Images)
+				.Include(x => x.Genre)
+				.Include(x => x.Author)
+				.Include(x => x.BookComments).ThenInclude(x => x.AppUser)
+				.Include(x => x.BookTags).ThenInclude(y => y.Tag).FirstOrDefault(x => x.Id == id);
+
+			if (book == null)
+				return StatusCode(404);
+
+			BookDetailViewModel bdvm = new BookDetailViewModel
+			{
+				Book = book,
+				RelatedBooks = _context.Books.Include(x => x.Images).Include(x=>x.Author).Where(x => x.GenreId == book.GenreId).ToList(),
+				Comment = new BookComment { BookId = id},
+			};
+
+
+			return View(bdvm);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult Comment(BookComment comment)
+		{
+			if (!User.Identity.IsAuthenticated || !User.IsInRole("Member"))
+				return RedirectToAction("login", "account", new { returnUrl = Url.Action("detail", "book", new { id = comment.BookId }) });
+
+            if (!ModelState.IsValid)
+			{
+                Book book = _context.Books
+               .Include(x => x.Images)
+               .Include(x => x.Genre)
+               .Include(x => x.Author)
+               .Include(x => x.BookComments).ThenInclude(x => x.AppUser)
+               .Include(x => x.BookTags).ThenInclude(y => y.Tag).FirstOrDefault(x => x.Id == comment.BookId);
+
+                if (book == null)
+                    return StatusCode(404);
+
+                BookDetailViewModel bdvm = new BookDetailViewModel
+                {
+                    Book = book,
+                    RelatedBooks = _context.Books.Include(x => x.Images).Include(x => x.Author).Where(x => x.GenreId == book.GenreId).ToList(),
+                    Comment = new BookComment { BookId = comment.BookId },
+                };
+
+                bdvm.Comment = comment;
+                return View("Detail", bdvm);
+
+            }
+
+            string UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+			comment.AppUserId = UserId;
+			comment.CreatedAt = DateTime.UtcNow.AddHours(4);
+
+			_context.BookComments.Add(comment);
+			_context.SaveChanges();
+
+			return RedirectToAction("detail", new { id = comment.BookId });
+		}
+
+
         public IActionResult GetBookDetail(int id)
         {
             Book book = _context.Books

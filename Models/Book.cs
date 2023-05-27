@@ -41,5 +41,6 @@ namespace PustokTemplate.Models
         public Genre Genre { get; set;}
         public List<Image> Images { get; set; } = new List<Image>();
         public List<BookTag> BookTags { get; set; }
+        public List<BookComment> BookComments { get; set; }
     }
 }
